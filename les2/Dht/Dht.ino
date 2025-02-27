@@ -1,4 +1,4 @@
-#include <>
+#include <ArduinoJson.h>
 
 JsonDocument doc;
 char jsonOut[128];
@@ -56,12 +56,15 @@ void loop() {
   CreateJSON(int(ldr_value));
 
   if (isDark(ldr_value) == true){
+  Serial.println("dark" );
     turnOn(D3, false);
   } else {
     turnOffAll();
+ // Serial.println("turnOffAll" );
   }
 
-  turnOnWhenLight(ldr_value);
+delay(100);
+  //turnOnWhenLight(ldr_value);
 }
 
 bool isDark(int ldrValue){
@@ -74,8 +77,8 @@ bool isDark(int ldrValue){
   return returnedBool;
 }
 
-int lowest = 40;
-int highest = 40;
+int lowest = 50;
+int highest = 50;
 void CreateJSON(int firstKey){
   doc["LDR"] = String(firstKey);
   doc["lowest"] = lowest;
@@ -93,6 +96,7 @@ void CreateJSON(int firstKey){
 
   serializeJson(doc, jsonOut);
   serializeJson(doc, Serial);
+  Serial.println();
 }
 
  
